@@ -99,6 +99,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ShiftPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e805e83-2d7a-4470-ab68-cfce230b9aba"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -156,6 +165,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66e09794-2671-4ed8-bdc0-7ad2af1cd564"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -165,6 +185,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         // Play
         m_Play = asset.FindActionMap("Play", throwIfNotFound: true);
         m_Play_Move = m_Play.FindAction("Move", throwIfNotFound: true);
+        m_Play_ShiftPress = m_Play.FindAction("ShiftPress", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -246,6 +267,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Play;
     private List<IPlayActions> m_PlayActionsCallbackInterfaces = new List<IPlayActions>();
     private readonly InputAction m_Play_Move;
+    private readonly InputAction m_Play_ShiftPress;
     /// <summary>
     /// Provides access to input actions defined in input action map "Play".
     /// </summary>
@@ -261,6 +283,10 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Play/Move".
         /// </summary>
         public InputAction @Move => m_Wrapper.m_Play_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "Play/ShiftPress".
+        /// </summary>
+        public InputAction @ShiftPress => m_Wrapper.m_Play_ShiftPress;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -290,6 +316,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @ShiftPress.started += instance.OnShiftPress;
+            @ShiftPress.performed += instance.OnShiftPress;
+            @ShiftPress.canceled += instance.OnShiftPress;
         }
 
         /// <summary>
@@ -304,6 +333,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @ShiftPress.started -= instance.OnShiftPress;
+            @ShiftPress.performed -= instance.OnShiftPress;
+            @ShiftPress.canceled -= instance.OnShiftPress;
         }
 
         /// <summary>
@@ -351,5 +383,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShiftPress" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShiftPress(InputAction.CallbackContext context);
     }
 }
