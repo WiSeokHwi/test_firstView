@@ -6,6 +6,7 @@ public abstract class PlayerState
     protected PlayerStateMachine stateMachine;
     protected PlayerInput input;
     protected CharacterController controller;
+    protected Animator animator;
     
     protected bool isGrounded;
     protected float walkSpeed;
@@ -23,6 +24,7 @@ public abstract class PlayerState
     {
         this.input = player.input;
         this.controller = player.controller;
+        this.animator = player.animator;
         walkSpeed = player.walkSpeed;
         runSpeed = player.runSpeed;
     }
@@ -31,11 +33,15 @@ public abstract class PlayerState
 
     public virtual void UpdateLogic()
     {
-        isGrounded = player.IsGround;
+        isGrounded = player.isGround;
         this.velocity = player.velocity;
         ChangeState();
     }
-    public virtual void UpdatePhysics() { }
+
+    public virtual void UpdatePhysics()
+    {
+        controller.Move(velocity * Time.fixedDeltaTime);
+    }
 
     protected virtual void ChangeState(){}
 }

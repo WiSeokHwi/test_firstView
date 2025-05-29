@@ -12,5 +12,10 @@ public class PlayerIdleState : PlayerState
         {
             stateMachine.ChangeState(new PlayerMoveState(player, stateMachine));
         }
+
+        if (input.jumpPressed && isGrounded)
+        {
+            stateMachine.ChangeState(new PlayerJumpState(player, stateMachine));
+        }
     }
 }

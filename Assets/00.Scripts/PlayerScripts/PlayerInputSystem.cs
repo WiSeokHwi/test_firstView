@@ -108,13 +108,31 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CamRotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""ca0dd979-cb5d-4f27-9841-adb98e20946a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""JumpPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7ad3e83-71a4-4447-b11e-bcada3b2a19b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""1c84c762-2f39-4690-8206-7dc88a6b1494"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -176,6 +194,28 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""ShiftPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06c5e6eb-5799-49f2-a958-3409194d259d"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a70ef44a-d217-4855-b9d3-cc14602351f2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +226,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Play = asset.FindActionMap("Play", throwIfNotFound: true);
         m_Play_Move = m_Play.FindAction("Move", throwIfNotFound: true);
         m_Play_ShiftPress = m_Play.FindAction("ShiftPress", throwIfNotFound: true);
+        m_Play_CamRotation = m_Play.FindAction("CamRotation", throwIfNotFound: true);
+        m_Play_JumpPress = m_Play.FindAction("JumpPress", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -268,6 +310,8 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private List<IPlayActions> m_PlayActionsCallbackInterfaces = new List<IPlayActions>();
     private readonly InputAction m_Play_Move;
     private readonly InputAction m_Play_ShiftPress;
+    private readonly InputAction m_Play_CamRotation;
+    private readonly InputAction m_Play_JumpPress;
     /// <summary>
     /// Provides access to input actions defined in input action map "Play".
     /// </summary>
@@ -287,6 +331,14 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Play/ShiftPress".
         /// </summary>
         public InputAction @ShiftPress => m_Wrapper.m_Play_ShiftPress;
+        /// <summary>
+        /// Provides access to the underlying input action "Play/CamRotation".
+        /// </summary>
+        public InputAction @CamRotation => m_Wrapper.m_Play_CamRotation;
+        /// <summary>
+        /// Provides access to the underlying input action "Play/JumpPress".
+        /// </summary>
+        public InputAction @JumpPress => m_Wrapper.m_Play_JumpPress;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -319,6 +371,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @ShiftPress.started += instance.OnShiftPress;
             @ShiftPress.performed += instance.OnShiftPress;
             @ShiftPress.canceled += instance.OnShiftPress;
+            @CamRotation.started += instance.OnCamRotation;
+            @CamRotation.performed += instance.OnCamRotation;
+            @CamRotation.canceled += instance.OnCamRotation;
+            @JumpPress.started += instance.OnJumpPress;
+            @JumpPress.performed += instance.OnJumpPress;
+            @JumpPress.canceled += instance.OnJumpPress;
         }
 
         /// <summary>
@@ -336,6 +394,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @ShiftPress.started -= instance.OnShiftPress;
             @ShiftPress.performed -= instance.OnShiftPress;
             @ShiftPress.canceled -= instance.OnShiftPress;
+            @CamRotation.started -= instance.OnCamRotation;
+            @CamRotation.performed -= instance.OnCamRotation;
+            @CamRotation.canceled -= instance.OnCamRotation;
+            @JumpPress.started -= instance.OnJumpPress;
+            @JumpPress.performed -= instance.OnJumpPress;
+            @JumpPress.canceled -= instance.OnJumpPress;
         }
 
         /// <summary>
@@ -390,5 +454,19 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShiftPress(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CamRotation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCamRotation(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "JumpPress" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJumpPress(InputAction.CallbackContext context);
     }
 }

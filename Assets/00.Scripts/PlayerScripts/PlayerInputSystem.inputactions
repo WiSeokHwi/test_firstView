@@ -22,13 +22,31 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CamRotation",
+                    "type": "Value",
+                    "id": "ca0dd979-cb5d-4f27-9841-adb98e20946a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "JumpPress",
+                    "type": "Button",
+                    "id": "c7ad3e83-71a4-4447-b11e-bcada3b2a19b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "2D Vector",
                     "id": "1c84c762-2f39-4690-8206-7dc88a6b1494",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -88,6 +106,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShiftPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06c5e6eb-5799-49f2-a958-3409194d259d",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a70ef44a-d217-4855-b9d3-cc14602351f2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
