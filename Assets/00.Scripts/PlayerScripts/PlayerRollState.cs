@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class PlayerJumpState : PlayerState
+public class PlayerRollState : PlayerState
 {
-    public PlayerJumpState(PlayerController player, PlayerStateMachine stateMachine) : base(player, stateMachine)
+    public PlayerRollState(PlayerController player, PlayerStateMachine stateMachine) : base(player, stateMachine)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        animator.SetTrigger("IsJump");
-        
+        animator.SetTrigger("IsRoll");
     }
 
     public override void UpdateLogic()
@@ -18,16 +17,8 @@ public class PlayerJumpState : PlayerState
         base.UpdateLogic();
         RotationToCamera();
     }
-
-    protected override void ChangeState()
-    {
-        
-        if (!player.isGround && player.velocity.y > 1f)
-        {
-            stateMachine.ChangeState(new PlayerFallState(player, stateMachine));
-        }
-    }
     
+
     void RotationToCamera()
     {
         Vector3 camForward = player.camPivot.forward;
@@ -36,7 +27,9 @@ public class PlayerJumpState : PlayerState
 
         if (camForward.sqrMagnitude < 0.01f) return; // 너무 짧은 벡터면 회전 안 함
 
-        Quaternion targetRotation = Quaternion.LookRotation(camForward, Vector3.up);
+        Quaternion targetRotation = Quaternion.LookRotation(camForward, Vector3.up); // 카메라의 정면을 y축 기준으로 저장
+        
+        // 캐릭터 회전
         player.transform.rotation = Quaternion.Slerp(
             player.transform.rotation,
             targetRotation,
@@ -44,15 +37,8 @@ public class PlayerJumpState : PlayerState
         );
     }
 
-    public override void Exit()
+    public void RollEnd()
     {
-        base.Exit();
-        animator.SetBool("IsJump", false);
+        stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
     }
-    
-    public void Jump()
-    {
-        player.velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
-    }
-    
 }

@@ -8,8 +8,7 @@ public class PlayerFallState : PlayerState
 
     protected override void ChangeState()
     {
-        base.ChangeState();
-        if (isGrounded)
+        if (isGrounded && player.velocity.y <= -0.1f)
         {
             stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
         }
@@ -18,7 +17,8 @@ public class PlayerFallState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        player.velocity = Vector2.zero;
+        player.velocity = Vector3.zero;
+        player.controller.Move(Vector3.zero);
         player.animator.SetFloat("VelocityX", 0);
         player.animator.SetFloat("VelocityZ", 0);
     }

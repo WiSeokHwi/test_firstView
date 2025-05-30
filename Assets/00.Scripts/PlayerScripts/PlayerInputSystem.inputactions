@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShiftDoubleTap",
+                    "type": "Button",
+                    "id": "cdaf711d-eaee-487e-bc5e-fe9ac84df1b1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -128,6 +137,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "JumpPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c19e53a-cc4a-44fb-b369-295d4939ea42",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "MultiTap(tapTime=0.3)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDoubleTap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

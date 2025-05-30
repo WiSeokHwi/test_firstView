@@ -11,8 +11,9 @@ public abstract class PlayerState
     protected bool isGrounded;
     protected float walkSpeed;
     protected float runSpeed;
+    protected float jumpHeight;
     
-    protected Vector3 velocity;
+    protected float gravity;
 
     public PlayerState(PlayerController player, PlayerStateMachine stateMachine)
     {
@@ -27,6 +28,8 @@ public abstract class PlayerState
         this.animator = player.animator;
         walkSpeed = player.walkSpeed;
         runSpeed = player.runSpeed;
+        gravity = player.gravity;
+        jumpHeight = player.jumpHeight;
     }
     public virtual void Exit() { }
     public virtual void HandleInput() { }
@@ -34,15 +37,40 @@ public abstract class PlayerState
     public virtual void UpdateLogic()
     {
         isGrounded = player.isGround;
-        this.velocity = player.velocity;
         ChangeState();
     }
 
     public virtual void UpdatePhysics()
     {
-        controller.Move(velocity * Time.fixedDeltaTime);
+        YVelocity();
+        controller.Move(player.velocity * Time.fixedDeltaTime);
     }
 
-    protected virtual void ChangeState(){}
+    protected virtual void ChangeState()
+    {
+        if (!isGrounded)
+        {
+            stateMachine.ChangeState(new PlayerFallState(player, stateMachine));
+        }
+    }
+    
+    // 중력 처리 메소드
+    void YVelocity()
+    {
+        if (stateMachine.CurrentState is PlayerJumpState)
+            return;
+
+        if (isGrounded)
+        {
+            if (player.velocity.y <= 0)
+            {
+                player.velocity.y = -2f;
+            }
+        }
+        else
+        {
+            player.velocity.y += gravity * Time.fixedDeltaTime;
+        }
+    }
 }
 

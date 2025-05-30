@@ -11,20 +11,16 @@ public class PlayerController : MonoBehaviour
     public PlayerInput input;
     public Animator animator;
     public Transform camPivot;
+    private GroundChecker groundChecker;
     
     PlayerStateMachine stateMachine;
     
-    
-    [ReadOnly]
-    [SerializeField]
+    // 값 저장하는 변수
+    public bool isGround;
     public Vector3 velocity;
     
-    // 값 저장하는 변수
-    public bool isGround => controller.isGrounded;
-    public bool jumping = false;
-    
     // 플레이어 속도, 점프 등 수치
-    [SerializeField] public float gravity = -9.81f; // CharacterController 중력 구현을 위한 중력값
+    [SerializeField] public float gravity = -20f; // CharacterController 중력 구현을 위한 중력값
     [SerializeField] public float walkSpeed = 3f;
     [SerializeField] public float runSpeed = 6f;
     [SerializeField] public float jumpHeight = 2f; // 점프 힘
@@ -37,6 +33,7 @@ public class PlayerController : MonoBehaviour
         input = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
         stateMachine = new PlayerStateMachine();
+        groundChecker = GetComponentInChildren<GroundChecker>();
     }
 
     private void Start()
@@ -46,11 +43,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        isGround = groundChecker.IsGrounded();
         animator.SetBool("IsGround", isGround);
-        YVelocity();
+        
         stateMachine.CurrentState.HandleInput();
         stateMachine.CurrentState.UpdateLogic();
         Debug.Log("플레이어 상태" + stateMachine.CurrentState);
+        Debug.Log("그라운드" + isGround);
+        
 
     }
 
@@ -58,30 +58,20 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.CurrentState.UpdatePhysics();
     }
-
-    void YVelocity()
+    
+    public void ApplyJumpForce()
     {
-        if (jumping && isGround)
+        if (stateMachine.CurrentState is PlayerJumpState jumpState)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            jumping = false;
-        }
-        else if (isGround) // 땅에 닿아있고 y의 속도가 가 0보다 작으면 
-        {
-            if (velocity.y <= 0)
-            {
-                velocity.y = -2f;
-            }
-        }
-        
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
+            jumpState.Jump();
         }
     }
 
-    void JumpingAnimEvent()
+    public void EndRoll()
     {
-        jumping = true;
+        if (stateMachine.CurrentState is PlayerRollState rollState)
+        {
+            rollState.RollEnd();
+        }
     }
 }

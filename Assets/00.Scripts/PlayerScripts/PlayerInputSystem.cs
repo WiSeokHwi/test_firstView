@@ -126,6 +126,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShiftDoubleTap"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdaf711d-eaee-487e-bc5e-fe9ac84df1b1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +225,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""JumpPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c19e53a-cc4a-44fb-b369-295d4939ea42"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""MultiTap(tapTime=0.3)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftDoubleTap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -228,6 +248,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Play_ShiftPress = m_Play.FindAction("ShiftPress", throwIfNotFound: true);
         m_Play_CamRotation = m_Play.FindAction("CamRotation", throwIfNotFound: true);
         m_Play_JumpPress = m_Play.FindAction("JumpPress", throwIfNotFound: true);
+        m_Play_ShiftDoubleTap = m_Play.FindAction("ShiftDoubleTap", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -312,6 +333,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Play_ShiftPress;
     private readonly InputAction m_Play_CamRotation;
     private readonly InputAction m_Play_JumpPress;
+    private readonly InputAction m_Play_ShiftDoubleTap;
     /// <summary>
     /// Provides access to input actions defined in input action map "Play".
     /// </summary>
@@ -339,6 +361,10 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Play/JumpPress".
         /// </summary>
         public InputAction @JumpPress => m_Wrapper.m_Play_JumpPress;
+        /// <summary>
+        /// Provides access to the underlying input action "Play/ShiftDoubleTap".
+        /// </summary>
+        public InputAction @ShiftDoubleTap => m_Wrapper.m_Play_ShiftDoubleTap;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -377,6 +403,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @JumpPress.started += instance.OnJumpPress;
             @JumpPress.performed += instance.OnJumpPress;
             @JumpPress.canceled += instance.OnJumpPress;
+            @ShiftDoubleTap.started += instance.OnShiftDoubleTap;
+            @ShiftDoubleTap.performed += instance.OnShiftDoubleTap;
+            @ShiftDoubleTap.canceled += instance.OnShiftDoubleTap;
         }
 
         /// <summary>
@@ -400,6 +429,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @JumpPress.started -= instance.OnJumpPress;
             @JumpPress.performed -= instance.OnJumpPress;
             @JumpPress.canceled -= instance.OnJumpPress;
+            @ShiftDoubleTap.started -= instance.OnShiftDoubleTap;
+            @ShiftDoubleTap.performed -= instance.OnShiftDoubleTap;
+            @ShiftDoubleTap.canceled -= instance.OnShiftDoubleTap;
         }
 
         /// <summary>
@@ -468,5 +500,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJumpPress(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShiftDoubleTap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShiftDoubleTap(InputAction.CallbackContext context);
     }
 }
