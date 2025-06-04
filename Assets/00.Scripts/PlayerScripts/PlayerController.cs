@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public Transform camPivot;
     private GroundChecker groundChecker;
     
-    PlayerStateMachine stateMachine;
+    public PlayerStateMachine stateMachine;
     
     // 값 저장하는 변수
     public bool isGround;
@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         stateMachine.CurrentState.UpdateLogic();
         Debug.Log("플레이어 상태" + stateMachine.CurrentState);
         Debug.Log("그라운드" + isGround);
+        Debug.Log("velocity" + velocity);
         
 
     }

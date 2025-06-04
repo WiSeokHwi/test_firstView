@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour
             if (ctx.interaction is MultiTapInteraction)
             {
                 shiftDoubleTapped = true;
-                Debug.Log("Shift 더블탭 감지!");
+                
                 // 타이밍 맞춰서 다시 false로 리셋해줘야 함
                 Invoke(nameof(ResetDoubleTap), 0.1f);
             }

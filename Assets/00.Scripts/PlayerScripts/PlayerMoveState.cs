@@ -20,6 +20,7 @@ public class PlayerMoveState : PlayerState
     private float currentTargetSpeed; // 현재 이동 속도
     private float targetSpeed; // 현재 타겟 스피드
     Vector2 moveVelocity; // 현재 속도 
+    private Vector2 targetVelocity;
     
     
     // SmoothDamp용 버퍼 변수
@@ -27,16 +28,14 @@ public class PlayerMoveState : PlayerState
     private float smoothAnimTargetSpeed; // SmoothDamp용 속도 버퍼 / 애니매이션 타겟 스피드 전환용
     private float smoothTargetSpeed; // SmoothDamp용 속도 버퍼 / Walk : Run 전환용
     Vector2 smoothVelocity; // smoothDamp용 속도 버퍼 / 실제 이동속도 변환용
-    
-    
-    
 
 
     public override void Enter()
     {
         base.Enter();
-        moveVelocity = Vector2.zero;
-        
+        player.velocity = Vector3.zero;
+        player.animator.SetFloat(VelocityX, 0);
+        player.animator.SetFloat(VelocityZ, 0);
     }
 
     public override void HandleInput()
@@ -78,7 +77,7 @@ public class PlayerMoveState : PlayerState
         Vector3 targetWorldVelocity = direction.normalized * currentTargetSpeed;
 
         // moveVelocity = XZ 평면만 사용 (Vector2)
-        Vector2 targetVelocity = new(targetWorldVelocity.x, targetWorldVelocity.z);
+        targetVelocity = new(targetWorldVelocity.x, targetWorldVelocity.z);
         moveVelocity = Vector2.SmoothDamp(moveVelocity, targetVelocity, ref smoothVelocity, damping);
 
         // 최종 월드 velocity 설정
@@ -167,7 +166,5 @@ public class PlayerMoveState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        moveVelocity = Vector2.zero;
-        currentAnimVelocity = Vector2.zero;
     }
 }

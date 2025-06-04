@@ -14,6 +14,8 @@ public abstract class PlayerState
     protected float jumpHeight;
     
     protected float gravity;
+    
+    protected Vector2 savedVelocity;
 
     public PlayerState(PlayerController player, PlayerStateMachine stateMachine)
     {

@@ -230,7 +230,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9c19e53a-cc4a-44fb-b369-295d4939ea42"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""MultiTap(tapTime=0.3)"",
+                    ""interactions"": ""MultiTap(tapTime=0.75)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ShiftDoubleTap"",
