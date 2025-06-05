@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         stateMachine.CurrentState.UpdateLogic();
         Debug.Log("플레이어 상태" + stateMachine.CurrentState);
         Debug.Log("그라운드" + isGround);
-        Debug.Log("velocity" + velocity);
         
 
     }
@@ -73,6 +72,14 @@ public class PlayerController : MonoBehaviour
         if (stateMachine.CurrentState is PlayerRollState rollState)
         {
             rollState.RollEnd();
+        }
+    }
+
+    public void EndHit()
+    {
+        if (stateMachine.CurrentState is PlayerHitState hitState)
+        {
+            hitState.HitEnd();
         }
     }
 }

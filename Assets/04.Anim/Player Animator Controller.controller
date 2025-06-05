@@ -425,7 +425,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: BodyMask
+    m_Name: UpperMask
     m_StateMachine: {fileID: 6178188415688531078}
     m_Mask: {fileID: 31900000, guid: d400aa17c8dc1a543af1d4ae77cacc55, type: 2}
     m_Motions: []
@@ -583,7 +583,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BodyMask
+  m_Name: UpperMask
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4868033084934812463}
@@ -618,9 +618,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.48958325
   m_TransitionOffset: 0
-  m_ExitTime: 1
+  m_ExitTime: 0.76041675
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

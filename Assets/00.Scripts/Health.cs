@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -18,6 +19,9 @@ public class Health : MonoBehaviour
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        
+        Debug.Log("데미지"+ amount);
+        Debug.Log("현제 체력"+ currentHealth);
         
         if (currentHealth <= 0)
         {
